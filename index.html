@@ -1,635 +1,1129 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#7657f6">
-<title>NIM SPERTO — Your social world</title>
-
+<title>NIM SPERTO — Your Social World</title>
 <style>
 :root {
   --purple: #7657f6;
-  --purple-dark: #5c3bd4;
   --pink: #ff5ca8;
   --ink: #251d38;
   --muted: #7b718d;
   --line: #e8e1f2;
   --bg: #f5f3fa;
-  --card: #fff;
+  --white: #ffffff;
 }
-
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
-  background: var(--bg);
+  font-family: system-ui, Arial, sans-serif;
   color: var(--ink);
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
 }
-
 button, input, textarea { font: inherit; }
 button { cursor: pointer; }
 .hidden { display: none !important; }
-
+button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 3px solid #7657f655;
+  outline-offset: 2px;
+}
 .topbar {
-  height: 68px;
-  background: #fff;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 0 20px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-weight: 900;
-  font-size: 21px;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 37px;
-  height: 37px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--purple), var(--pink));
-  color: white;
-}
-
-.searchbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #f3f0fa;
-  border-radius: 999px;
-  padding: 0 14px;
-  height: 42px;
-  max-width: 300px;
-  flex: 1;
-}
-
-.searchbox input {
-  border: 0;
-  background: transparent;
-  outline: none;
-  width: 100%;
-  min-width: 0;
-}
-
-.topnav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex: 1;
-}
-
-.navbtn {
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-weight: 700;
-}
-
-.navbtn.active,
-.navbtn:hover {
-  background: #f1ecff;
-  color: var(--purple);
-}
-
-.top-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.roundbtn {
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 50%;
-  background: #f3f0fa;
-  color: var(--ink);
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, #e9ddff, #ffdce9);
-  color: #6245d8;
-  font-weight: 850;
-}
-
-.layout {
-  max-width: 1320px;
-  margin: 22px auto;
-  padding: 0 18px;
-  display: grid;
-  grid-template-columns: 240px minmax(0, 650px) 280px;
-  gap: 22px;
-  align-items: start;
-}
-
-.sidebar, .rightbar {
-  position: sticky;
-  top: 90px;
-  display: grid;
-  gap: 12px;
-}
-
-.sidecard, .card {
-  background: var(--card);
-  border: 1px solid #eee9f6;
-  border-radius: 18px;
-  box-shadow: 0 4px 18px #38225d06;
-}
-
-.sidecard { padding: 14px; }
-
-.side-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  border: 0;
-  background: transparent;
-  padding: 12px;
-  border-radius: 12px;
-  text-align: left;
-  color: var(--ink);
-  font-weight: 700;
-}
-
-.side-link:hover,
-.side-link.active {
-  background: #f3efff;
-  color: var(--purple);
-}
-
-.side-icon {
-  width: 28px;
-  text-align: center;
-  font-size: 19px;
-}
-
-.small-muted {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.main {
-  min-width: 0;
-  display: grid;
-  gap: 16px;
-}
-
-.welcome {
-  padding: 20px;
-  background: linear-gradient(120deg, #7657f6, #9a58e7 60%, #ff5ca8);
-  color: white;
-  border-radius: 18px;
-}
-
-.welcome h1 {
-  font-size: 24px;
-  margin: 0 0 5px;
-}
-
-.welcome p {
-  margin: 0;
-  color: #ffffffdf;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.card { padding: 16px; }
-
-.composer-head {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-}
-
-.composer textarea {
-  display: block;
-  width: 100%;
-  min-height: 88px;
-  resize: vertical;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 13px;
-  margin-top: 13px;
-  background: #fdfcff;
-  color: var(--ink);
-}
-
-.composer-tools {
+  min-height: 66px;
+  padding: 12px 4%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 12px;
-  flex-wrap: wrap;
+  gap: 15px;
+  background: white;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }
-
-.toolset {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
+.brand {
+  font-size: 21px;
+  font-weight: 900;
+  white-space: nowrap;
 }
-
-.toolbtn {
+.brand span { color: var(--purple); }
+.search {
+  max-width: 280px;
+  width: 100%;
+  padding: 11px 14px;
   border: 0;
-  background: #f5f1fc;
-  color: #6042ca;
-  padding: 9px 12px;
+  border-radius: 24px;
+  background: var(--bg);
+}
+button {
+  border: 0;
   border-radius: 10px;
-  font-size: 13px;
-  font-weight: 750;
+  padding: 10px 14px;
 }
-
+.nav-button {
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+}
+.nav-button.active {
+  background: #f0ebff;
+  color: var(--purple);
+}
 .primary {
-  border: 0;
-  background: linear-gradient(90deg, var(--purple), var(--pink));
-  color: #fff;
-  padding: 11px 17px;
-  border-radius: 11px;
+  background: linear-gradient(100deg, var(--purple), var(--pink));
+  color: white;
   font-weight: 800;
 }
-
-.status {
-  font-size: 13px;
-  color: var(--purple-dark);
-  min-height: 18px;
-  margin: 8px 0 0;
-  overflow-wrap: anywhere;
+.layout {
+  max-width: 1250px;
+  margin: 22px auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 650px) 240px;
+  gap: 18px;
+  align-items: start;
 }
-
-.post { padding: 17px; }
-
-.post-head {
+.sidebar, .rightbar {
+  display: grid;
+  gap: 14px;
+  position: sticky;
+  top: 85px;
+}
+.card {
+  background: white;
+  padding: 17px;
+  border-radius: 17px;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 16px #38225d08;
+}
+.side-link {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  padding: 12px;
+  margin: 2px 0;
+  color: var(--ink);
+  font-weight: 700;
+}
+.side-link:hover, .side-link.active {
+  background: #f0ebff;
+  color: var(--purple);
+}
+.muted { color: var(--muted); font-size: 13px; }
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e7dcff, #ffddec);
+  color: var(--purple);
+  display: inline-grid;
+  place-items: center;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.welcome {
+  padding: 23px;
+  color: white;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #7657f6, #a14fdf, #ff5ca8);
+}
+.welcome h1 { margin: 0 0 8px; font-size: 25px; }
+.welcome p { margin: 0; line-height: 1.6; }
+.composer-head {
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+textarea, input {
+  color: var(--ink);
+}
+#postContent {
+  width: 100%;
+  min-height: 100px;
+  padding: 13px;
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  resize: vertical;
+}
+.composer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 10px;
+  margin-top: 12px;
 }
-
-.post-user { font-weight: 800; }
-
-.post-time {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 3px;
+.tool-button {
+  background: #f0ebff;
+  color: var(--purple);
+  font-weight: 700;
 }
-
+.post-card { margin-bottom: 14px; }
 .post-content {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   line-height: 1.65;
-  margin: 15px 0;
 }
-
 .post-actions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   border-top: 1px solid var(--line);
   padding-top: 10px;
 }
-
-.actionbtn {
+.post-actions button {
   flex: 1;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  padding: 10px 5px;
-  border-radius: 10px;
-  font-weight: 750;
-}
-
-.actionbtn:hover,
-.actionbtn.liked {
-  background: #f4efff;
+  background: #f5f2fb;
   color: var(--purple);
+  font-weight: 700;
 }
-
-.comments {
-  border-top: 1px solid var(--line);
-  margin-top: 10px;
-  padding-top: 12px;
-}
-
-.comment-line {
-  padding: 8px 10px;
-  background: #f7f5fb;
-  border-radius: 11px;
+.comment {
+  padding: 9px;
   margin: 7px 0;
-  font-size: 14px;
-  white-space: pre-wrap;
+  background: #f6f3fb;
+  border-radius: 10px;
   overflow-wrap: anywhere;
 }
-
 .comment-form {
   display: flex;
-  gap: 8px;
+  gap: 7px;
   margin-top: 10px;
 }
-
 .comment-form input {
   min-width: 0;
   flex: 1;
+  padding: 10px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 10px 13px;
+  border-radius: 20px;
 }
-
-.comment-form button {
-  border: 0;
-  background: var(--purple);
-  color: white;
-  border-radius: 999px;
-  padding: 9px 13px;
-  font-weight: 750;
-}
-
-.right-title { font-size: 15px; margin: 2px 0 12px; }
-
-.trend {
-  padding: 10px 0;
-  border-top: 1px solid var(--line);
-}
-
-.trend strong {
-  font-size: 13px;
-  display: block;
-}
-
-.trend span {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.profile-box {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  margin-bottom: 10px;
-}
-
-.profile-box strong {
-  display: block;
-  font-size: 14px;
-}
-
-.profile-box span {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.section-title { margin: 0; font-size: 22px; }
-
-.section-intro {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/* Login screen */
-.auth-shell {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 22px;
-  background: radial-gradient(circle at 15% 10%, #f4ddff 0, transparent 30%),
-              radial-gradient(circle at 90% 80%, #ffe0ed 0, transparent 30%),
-              var(--bg);
-}
-
-.auth-wrap {
-  width: min(100%, 980px);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: #fff;
-  border-radius: 28px;
-  overflow: hidden;
-  box-shadow: 0 24px 90px #44307018;
-}
-
-.hero {
-  padding: clamp(28px, 5vw, 58px);
-  background: linear-gradient(145deg, #7151ef, #9b4fe3 52%, #ff5ca8);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 560px;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-copy { position: relative; z-index: 1; }
-
-.hero h1 {
-  font-size: clamp(36px, 5vw, 54px);
-  line-height: 1.02;
-  margin: 0 0 18px;
-}
-
-.hero p {
-  line-height: 1.7;
-  color: #ffffffdf;
-  max-width: 340px;
-}
-
-.chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
-}
-
-.chips span {
-  border: 1px solid #ffffff55;
-  background: #ffffff17;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-}
-
-.formside {
-  padding: clamp(25px, 5vw, 54px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.formside h2 { font-size: 27px; margin: 0 0 8px; }
-
-.sub {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 0 0 25px;
-}
-
-.tabs {
-  display: flex;
-  gap: 5px;
-  padding: 5px;
-  background: #f4f0fb;
-  border-radius: 13px;
-  margin-bottom: 22px;
-}
-
-.tabs button {
-  flex: 1;
-  border: 0;
-  background: transparent;
-  padding: 11px;
-  border-radius: 10px;
-  font-weight: 750;
-  color: var(--muted);
-}
-
-.tabs button.active {
-  background: #fff;
-  color: var(--purple);
-}
-
-.formside label {
+.form-label {
   display: block;
   font-size: 13px;
   font-weight: 750;
   margin: 14px 0 7px;
 }
-
-.formside input {
-  display: block;
+.form-input {
   width: 100%;
-  padding: 13px 14px;
+  padding: 12px;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fff;
-  color: var(--ink);
+  border-radius: 11px;
 }
-
-.formside .primary { width: 100%; margin-top: 20px; }
-
-.google {
-  width: 100%;
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(circle at 10% 10%, #f0dcff, transparent 35%), var(--bg);
+}
+.auth-wrap {
+  width: min(950px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border-radius: 25px;
   background: white;
-  color: var(--ink);
-  border: 1px solid var(--line);
-  margin-top: 12px;
-  padding: 13px;
-  border-radius: 12px;
-  font-weight: 800;
+  box-shadow: 0 20px 70px #44307018;
 }
-
-.divider {
+.hero {
+  padding: 40px;
+  color: white;
+  background: linear-gradient(145deg, #7151ef, #9b4fe3 55%, #ff5ca8);
   display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #a198b0;
-  font-size: 12px;
-  margin: 18px 0;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 520px;
 }
-
-.divider:before, .divider:after {
-  content: "";
-  height: 1px;
-  background: var(--line);
-  flex: 1;
+.hero h1 {
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
 }
-
-.note {
-  font-size: 11px;
-  color: #9389a4;
-  line-height: 1.6;
-  margin-top: 20px;
+.hero p { line-height: 1.7; }
+.form-side { padding: 35px; align-self: center; }
+.form-side h2 { margin-bottom: 7px; }
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  background: var(--bg);
+  border-radius: 12px;
+  margin: 22px 0;
 }
-
+.tabs button { flex: 1; background: transparent; font-weight: 700; }
+.tabs button.active { background: white; color: var(--purple); }
+#authForm .primary { width: 100%; margin-top: 20px; }
 .feedback {
   font-size: 13px;
   line-height: 1.5;
-  margin-top: 14px;
-  color: #6042ca;
+  color: var(--purple);
   overflow-wrap: anywhere;
 }
-
-.profile-edit { display: grid; gap: 10px; }
-.profile-edit input { margin: 0; }
-.profile-edit .primary { margin-top: 0; }
-
+.profile-form { display: grid; gap: 10px; }
+.profile-form textarea {
+  min-height: 85px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
 .mobile-nav { display: none; }
-
-@media(max-width:1050px) {
-  .layout { grid-template-columns: 205px minmax(0,1fr); }
+@media (max-width: 1000px) {
+  .layout { grid-template-columns: 190px minmax(0, 1fr); }
   .rightbar { display: none; }
 }
-
-@media(max-width:720px) {
-  .topbar { height: 60px; padding: 0 12px; gap: 10px; }
-  .brand { font-size: 18px; }
-  .brand-mark { width: 34px; height: 34px; }
-  .topnav { display: none; }
-  .top-actions .roundbtn { display: none; }
-  .layout { display: block; margin: 12px auto; padding: 0 10px; }
+@media (max-width: 680px) {
+  .topbar { padding: 10px; gap: 8px; }
+  .brand { font-size: 17px; }
+  .search { min-width: 0; }
+  .topbar .desktop-nav { display: none; }
+  .layout { display: block; padding: 0 10px; margin: 12px auto; }
   .sidebar, .rightbar { display: none; }
-  .main { gap: 12px; }
-  .welcome { padding: 17px; }
+  .welcome { padding: 18px; }
   .welcome h1 { font-size: 22px; }
-  .card { padding: 13px; border-radius: 15px; }
-  .post { padding: 14px; }
+  .auth-shell { padding: 10px; }
+  .auth-wrap { grid-template-columns: 1fr; }
+  .hero { min-height: 210px; padding: 23px; }
+  .hero h1 { font-size: 36px; margin-bottom: 8px; }
+  .form-side { padding: 23px; }
   .mobile-nav {
-    display: flex;
     position: fixed;
+    display: flex;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 20;
-    background: #fff;
-    border-top: 1px solid var(--line);
-    padding: 6px 4px;
+    z-index: 10;
     justify-content: space-around;
+    background: white;
+    border-top: 1px solid var(--line);
+    padding: 7px 2px;
   }
   .mobile-nav button {
-    display: grid;
-    gap: 2px;
-    justify-items: center;
     flex: 1;
-    border: 0;
     background: transparent;
+    padding: 7px 2px;
+    font-size: 11px;
     color: var(--muted);
-    font-size: 10px;
-    padding: 5px 0;
   }
-  .mobile-nav button span:first-child { font-size: 20px; }
   .mobile-nav button.active { color: var(--purple); }
-  body.has-session { padding-bottom: 68px; }
-  .auth-shell { padding: 12px; }
-  .auth-wrap { grid-template-columns: 1fr; border-radius: 22px; }
-  .hero { min-height: 260px; padding: 24px; }
-  .hero h1 { font-size: 38px; }
-  .hero-copy { margin: 28px 0 18px; }
-  .chips { display: none; }
-  .formside { padding: 24px; }
+  body.logged-in { padding-bottom: 65px; }
 }
 </style>
 </head>
 <body>
+<!--
+<!-- LOGIN SCREEN -->
+<section id="authView" class="auth-shell">
+  <div class="auth-wrap">
+    <div class="hero">
+      <div class="brand" style="color:white">✦ NIM SPERTO</div>
+      <div>
+        <h1>Your world.<br>Your people.</h1>
+        <p>Connect with friends, share your moments, and discover your community.</p>
+      </div>
+      <p>✦ Share moments &nbsp; ♡ Stay connected</p>
+    </div>
+
+    <div class="form-side">
+      <h2 id="authHeading">Welcome back!</h2>
+      <p class="muted" id="authSubtitle">Sign in to your social world.</p>
+
+      <div class="tabs">
+        <button id="loginTab" class="active" type="button">Log in</button>
+        <button id="signupTab" type="button">Create account</button>
+      </div>
+
+      <form id="authForm">
+        <div id="nameField" class="hidden">
+          <label class="form-label" for="displayName">Your name</label>
+          <input class="form-input" id="displayName" maxlength="80"
+                 placeholder="Enter your name">
+        </div>
+
+        <label class="form-label" for="email">Email address</label>
+        <input class="form-input" id="email" type="email"
+               autocomplete="email" required placeholder="you@example.com">
+
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" id="password" type="password"
+               minlength="8" autocomplete="current-password"
+               required placeholder="At least 8 characters">
+
+        <button class="primary" id="authSubmit" type="submit">Log in</button>
+      </form>
+
+      <p id="authFeedback" class="feedback" role="status"></p>
+      <p class="muted">Be kind, respect privacy, and never share your password.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL WEBSITE -->
+<div id="appView" class="hidden">
+  <header class="topbar">
+    <div class="brand"><span>N</span> NIM SPERTO</div>
+    <input id="searchInput" class="search" type="search"
+           placeholder="Search posts..." aria-label="Search posts">
+    <nav class="desktop-nav">
+      <button class="nav-button active" data-section="home">Home</button>
+      <button class="nav-button" data-section="friends">Friends</button>
+      <button class="nav-button" data-section="messages">Messages</button>
+    </nav>
+    <button class="nav-button" data-section="profile">My profile</button>
+  </header>
+
+  <div class="layout">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="card">
+        <div class="composer-head">
+          <div class="avatar" id="sideAvatar">N</div>
+          <div>
+            <strong id="sideName">Your profile</strong>
+            <div class="muted">Welcome to NIM SPERTO</div>
+          </div>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:15px 0">
+        <button class="side-link active" data-section="home">⌂ Home feed</button>
+        <button class="side-link" data-section="profile">☺ My profile</button>
+        <button class="side-link" data-section="friends">♧ Friends</button>
+        <button class="side-link" data-section="messages">✉ Messages</button>
+        <button class="side-link" data-section="notifications">♧ Notifications</button>
+        <button class="side-link" data-section="saved">☆ Saved posts</button>
+        <button class="side-link" id="logoutButton">↪ Log out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <section id="homeSection" class="main">
+        <div class="welcome">
+          <h1>Your world. Your people. ✨</h1>
+          <p>Share a thought and join the conversation.</p>
+        </div>
+
+        <div class="card">
+          <div class="composer-head">
+            <div class="avatar" id="composerAvatar">N</div>
+            <div>
+              <strong id="composerName">Create a post</strong>
+              <div class="muted">Share something with your community.</div>
+            </div>
+          </div>
+
+          <form id="postForm">
+            <textarea id="postContent" maxlength="5000"
+                      placeholder="What's on your mind?"
+                      required></textarea>
+            <div class="composer-actions">
+              <div>
+                <button class="tool-button" id="photoButton" type="button">▧ Photo</button>
+                <button class="tool-button" id="videoButton" type="button">▷ Video</button>
+              </div>
+              <button class="primary" id="publishButton" type="submit">Publish post</button>
+            </div>
+            <p id="postFeedback" class="status" role="status"></p>
+          </form>
+        </div>
+
+        <div id="postsList">
+          <div class="card muted">Your posts will appear here.</div>
+        </div>
+      </section>
+
+      <!-- PROFILE -->
+      <section id="profileSection" class="hidden">
+        <div class="card">
+          <h2>Your profile</h2>
+          <p class="muted">Update your profile information.</p>
+          <div class="composer-head" style="margin:18px 0">
+            <div class="avatar" id="profileAvatar">N</div>
+            <div>
+              <strong id="profileName">Your name</strong>
+              <div class="muted" id="profileEmail"></div>
+            </div>
+          </div>
+
+          <form id="profileForm" class="profile-form">
+            <label for="editName">Display name</label>
+            <input class="form-input" id="editName" maxlength="80" required>
+
+            <label for="editBio">About me</label>
+            <textarea id="editBio" maxlength="300"
+                      placeholder="Write a little about yourself"></textarea>
+
+            <button class="primary" type="submit">Save profile</button>
+            <p id="profileFeedback" class="status" role="status"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- FRIENDS -->
+      <section id="friendsSection" class="hidden card">
+        <h2>Friends & followers</h2>
+        <p class="muted">Friend requests and following will be added after we connect those features to the database.</p>
+      </section>
+
+      <!-- MESSAGES -->
+      <section id="messagesSection" class="hidden card">
+        <h2>Messages</h2>
+        <p class="muted">Private messaging needs its own database table and security policies before it can work.</p>
+      </section>
+
+      <!-- NOTIFICATIONS -->
+      <section id="notificationsSection" class="hidden card">
+        <h2>Notifications</h2>
+        <p class="muted">Notifications will be connected after the main social features are working.</p>
+      </section>
+
+      <!-- SAVED POSTS -->
+      <section id="savedSection" class="hidden card">
+        <h2>Saved posts</h2>
+        <p class="muted">Saving posts will be added in a future update.</p>
+      </section>
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="rightbar">
+      <div class="card">
+        <h3>Community guide ✨</h3>
+        <p class="muted">Be respectful and welcome different ideas.</p>
+        <p class="muted">Protect your personal information.</p>
+        <p class="muted">Like and comment on posts kindly.</p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- MOBILE NAVIGATION -->
+  <nav class="mobile-nav">
+    <button class="active" data-section="home">⌂ Home</button>
+    <button data-section="friends">♧ Friends</button>
+    <button data-section="messages">✉ Messages</button>
+    <button data-section="notifications">♧ Alerts</button>
+    <button data-section="profile">☺ Profile</button>
+  </nav>
+</div>
+
+<!-- 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module">
+const SUPABASE_URL = "https://micktgtheoapwlkybvjf.supabase.co";
+const SUPABASE_KEY = "sb_publishable_a7202fOro3V11fUabIpDTg_dBD2qd0k";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $ = (id) => document.getElementById(id);
+
+let currentUser = null;
+let currentProfile = null;
+let authMode = "login";
+let activeSection = "home";
+
+function escapeHTML(value = "") {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function setFeedback(id, message, isError = false) {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = message;
+  el.style.color = isError ? "#b42318" : "#16803c";
+}
+
+function setButtonBusy(button, busy, busyText = "Please wait...") {
+  if (!button) return;
+  if (busy) {
+    button.dataset.originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = busyText;
+  } else {
+    button.disabled = false;
+    if (button.dataset.originalText) {
+      button.textContent = button.dataset.originalText;
+      delete button.dataset.originalText;
+    }
+  }
+}
+
+function displayName() {
+  return currentProfile?.display_name ||
+    currentUser?.user_metadata?.display_name ||
+    currentUser?.email?.split("@")[0] ||
+    "NIM SPERTO member";
+}
+
+function avatarLetter(name = "N") {
+  return escapeHTML(name.trim().charAt(0).toUpperCase() || "N");
+}
+
+function showLoggedOut() {
+  $("authView")?.classList.remove("hidden");
+  $("appView")?.classList.add("hidden");
+}
+
+function showLoggedIn() {
+  $("authView")?.classList.add("hidden");
+  $("appView")?.classList.remove("hidden");
+
+  const name = displayName();
+
+  if ($("sideName")) $("sideName").textContent = name;
+  if ($("sideAvatar")) $("sideAvatar").textContent = avatarLetter(name);
+  if ($("profileAvatar")) $("profileAvatar").textContent = avatarLetter(name);
+  if ($("profileName")) $("profileName").textContent = name;
+  if ($("profileEmail")) $("profileEmail").textContent = currentUser.email || "";
+  if ($("editName")) $("editName").value = currentProfile?.display_name || "";
+  if ($("editBio")) $("editBio").value = currentProfile?.bio || "";
+
+  showSection(activeSection);
+}
+
+function showSection(section) {
+  activeSection = section;
+
+  const sectionIds = {
+    home: "homeSection",
+    profile: "profileSection",
+    friends: "friendsSection",
+    messages: "messagesSection",
+    notifications: "notificationsSection",
+    saved: "savedSection"
+  };
+
+  Object.values(sectionIds).forEach((id) => {
+    $(id)?.classList.add("hidden");
+  });
+
+  $(sectionIds[section] || "homeSection")?.classList.remove("hidden");
+
+  document.querySelectorAll("[data-section]").forEach((button) => {
+    const selected = button.dataset.section === section;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-current", selected ? "page" : "false");
+  });
+
+  if (section === "home") loadPosts();
+  if (section === "profile") loadProfile();
+  if (section === "friends") showPlaceholder("friendsSection", "Friends");
+  if (section === "messages") showPlaceholder("messagesSection", "Messages");
+  if (section === "notifications") showPlaceholder("notificationsSection", "Notifications");
+  if (section === "saved") showPlaceholder("savedSection", "Saved posts");
+}
+
+function showPlaceholder(sectionId, title) {
+  const section = $(sectionId);
+  if (!section) return;
+
+  let message = "This feature is not connected yet.";
+  if (title === "Friends") message = "Friend requests and your friends list are not connected yet.";
+  if (title === "Messages") message = "Private messaging is not connected yet.";
+  if (title === "Notifications") message = "Notifications are not connected yet.";
+  if (title === "Saved posts") message = "Saving and viewing posts is not connected yet.";
+
+  section.innerHTML = `
+    <div class="card">
+      <h2>${escapeHTML(title)}</h2>
+      <p class="muted">${escapeHTML(message)}</p>
+    </div>`;
+}
+
+async function loadProfile() {
+  if (!currentUser) return;
+
+  const { data, error } = await db
+    .from("profiles")
+    .select("id, display_name, bio")
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    setFeedback("profileFeedback", error.message, true);
+    return;
+  }
+
+  if (data) currentProfile = data;
+  showLoggedIn();
+}
+
+async function ensureProfile(user) {
+  const { data, error } = await db
+    .from("profiles")
+    .select("id, display_name, bio")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Could not load profile:", error.message);
+    currentProfile = {
+      id: user.id,
+      display_name: user.user_metadata?.display_name || user.email?.split("@")[0] || "Member",
+      bio: ""
+    };
+    return;
+  }
+
+  if (data) {
+    currentProfile = data;
+    return;
+  }
+
+  const initialName =
+    user.user_metadata?.display_name ||
+    user.email?.split("@")[0] ||
+    "Member";
+
+  const { data: created, error: insertError } = await db
+    .from("profiles")
+    .insert({
+      id: user.id,
+      display_name: initialName,
+      bio: ""
+    })
+    .select("id, display_name, bio")
+    .single();
+
+  if (insertError) {
+    console.error("Could not create profile:", insertError.message);
+    currentProfile = {
+      id: user.id,
+      display_name: initialName,
+      bio: ""
+    };
+    return;
+  }
+
+  currentProfile = created;
+}
+
+function setAuthMode(mode) {
+  authMode = mode;
+  const isSignup = mode === "signup";
+
+  if ($("authHeading")) {
+    $("authHeading").textContent = isSignup ? "Create your account" : "Welcome back";
+  }
+  if ($("authSubtitle")) {
+    $("authSubtitle").textContent = isSignup
+      ? "Join NIM SPERTO and connect with people."
+      : "Log in to continue to NIM SPERTO.";
+  }
+  if ($("nameField")) {
+    $("nameField").classList.toggle("hidden", !isSignup);
+  }
+  if ($("displayName")) {
+    $("displayName").required = isSignup;
+  }
+  if ($("authSubmit")) {
+    $("authSubmit").textContent = isSignup ? "Create account" : "Log in";
+  }
+  if ($("loginTab")) {
+    $("loginTab").classList.toggle("active", !isSignup);
+  }
+  if ($("signupTab")) {
+    $("signupTab").classList.toggle("active", isSignup);
+  }
+
+  setFeedback("authFeedback", "");
+}
+
+async function handleAuth(event) {
+  event.preventDefault();
+
+  const email = $("email")?.value.trim();
+  const password = $("password")?.value;
+  const name = $("displayName")?.value.trim();
+
+  if (!email || !password) {
+    setFeedback("authFeedback", "Enter your email and password.", true);
+    return;
+  }
+
+  const button = $("authSubmit");
+  setButtonBusy(button, true);
+
+  try {
+    if (authMode === "signup") {
+      if (!name) {
+        setFeedback("authFeedback", "Enter a display name.", true);
+        return;
+      }
+
+      const { data, error } = await db.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { display_name: name }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        setFeedback("authFeedback", "Account created!");
+      } else {
+        setFeedback(
+          "authFeedback",
+          "Account created. Check your email to confirm it, then log in."
+        );
+      }
+    } else {
+      const { error } = await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) throw error;
+    }
+  } catch (error) {
+    setFeedback("authFeedback", error.message || "Authentication failed.", true);
+  } finally {
+    setButtonBusy(button, false);
+  }
+}
+
+async function loadPosts() {
+  const list = $("postsList");
+  if (!list || !currentUser) return;
+
+  list.innerHTML = '<div class="card"><p class="muted">Loading posts...</p></div>';
+
+  const { data: posts, error } = await db
+    .from("posts")
+    .select("id, user_id, content, created_at")
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (error) {
+    list.innerHTML = `<div class="card"><p class="muted">Could not load posts: ${escapeHTML(error.message)}</p></div>`;
+    return;
+  }
+
+  if (!posts?.length) {
+    list.innerHTML = '<div class="card"><p class="muted">No posts yet. Be the first to share something!</p></div>';
+    return;
+  }
+
+  const userIds = [...new Set(posts.map((post) => post.user_id))];
+
+  const { data: profiles } = await db
+    .from("profiles")
+    .select("id, display_name")
+    .in("id", userIds);
+
+  const names = new Map((profiles || []).map((profile) => [
+    profile.id,
+    profile.display_name || "NIM SPERTO member"
+  ]));
+
+  const postIds = posts.map((post) => post.id);
+
+  const { data: likes } = await db
+    .from("post_likes")
+    .select("post_id, user_id")
+    .in("post_id", postIds);
+
+  const { data: comments } = await db
+    .from("post_comments")
+    .select("id, post_id, user_id, content, created_at")
+    .in("post_id", postIds)
+    .order("created_at", { ascending: true });
+
+  const likesByPost = new Map();
+  (likes || []).forEach((like) => {
+    if (!likesByPost.has(like.post_id)) likesByPost.set(like.post_id, []);
+    likesByPost.get(like.post_id).push(like);
+  });
+
+  const commentsByPost = new Map();
+  (comments || []).forEach((comment) => {
+    if (!commentsByPost.has(comment.post_id)) commentsByPost.set(comment.post_id, []);
+    commentsByPost.get(comment.post_id).push(comment);
+  });
+
+  list.innerHTML = posts.map((post) => {
+    const author = names.get(post.user_id) || "NIM SPERTO member";
+    const postLikes = likesByPost.get(post.id) || [];
+    const liked = postLikes.some((like) => like.user_id === currentUser.id);
+    const postComments = commentsByPost.get(post.id) || [];
+
+    const date = post.created_at
+      ? new Date(post.created_at).toLocaleString()
+      : "";
+
+    return `
+      <article class="post-card card" data-post-id="${escapeHTML(post.id)}">
+        <div class="composer-head">
+          <div class="avatar">${avatarLetter(author)}</div>
+          <div>
+            <strong>${escapeHTML(author)}</strong>
+            <div class="muted">${escapeHTML(date)}</div>
+          </div>
+        </div>
+        <div class="post-content">${escapeHTML(post.content).replace(/\n/g, "<br>")}</div>
+        <div class="post-actions">
+          <button class="tool-button like-button" type="button" data-post-id="${escapeHTML(post.id)}">
+            ${liked ? "♥ Liked" : "♡ Like"} (${postLikes.length})
+          </button>
+          <span class="muted">${postComments.length} comment${postComments.length === 1 ? "" : "s"}</span>
+        </div>
+        <div class="comments-list">
+          ${postComments.map((comment) => `
+            <div class="comment">
+              <strong>${escapeHTML(names.get(comment.user_id) || "Member")}</strong>
+              <span>${escapeHTML(comment.content)}</span>
+            </div>
+          `).join("")}
+        </div>
+        <form class="comment-form" data-post-id="${escapeHTML(post.id)}">
+          <input class="form-input" name="comment" maxlength="1000"
+            placeholder="Write a comment..." aria-label="Write a comment" required>
+          <button class="tool-button" type="submit">Comment</button>
+        </form>
+      </article>`;
+  }).join("");
+}
+
+async function publishPost(event) {
+  event.preventDefault();
+  if (!currentUser) return;
+
+  const content = $("postContent")?.value.trim();
+  if (!content) {
+    setFeedback("postFeedback", "Write something before publishing.", true);
+    return;
+  }
+
+  const button = $("publishButton");
+  setButtonBusy(button, true, "Publishing...");
+
+  try {
+    const { error } = await db.from("posts").insert({
+      user_id: currentUser.id,
+      content
+    });
+
+    if (error) throw error;
+
+    $("postContent").value = "";
+    setFeedback("postFeedback", "Your post was published!");
+    await loadPosts();
+  } catch (error) {
+    setFeedback("postFeedback", error.message || "Could not publish your post.", true);
+  } finally {
+    setButtonBusy(button, false);
+  }
+}
+
+async function toggleLike(postId, button) {
+  if (!currentUser) return;
+
+  button.disabled = true;
+
+  try {
+    const { data: existing, error: findError } = await db
+      .from("post_likes")
+      .select("id")
+      .eq("post_id", postId)
+      .eq("user_id", currentUser.id)
+      .maybeSingle();
+
+    if (findError) throw findError;
+
+    if (existing) {
+      const { error } = await db
+        .from("post_likes")
+        .delete()
+        .eq("id", existing.id);
+
+      if (error) throw error;
+    } else {
+      const { error } = await db.from("post_likes").insert({
+        post_id: postId,
+        user_id: currentUser.id
+      });
+
+      if (error) throw error;
+    }
+
+    await loadPosts();
+  } catch (error) {
+    alert("Could not update like: " + (error.message || "Unknown error"));
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function addComment(event) {
+  event.preventDefault();
+  if (!currentUser) return;
+
+  const form = event.currentTarget;
+  const postId = form.dataset.postId;
+  const input = form.elements.comment;
+  const content = input.value.trim();
+
+  if (!content) return;
+
+  const button = form.querySelector('button[type="submit"]');
+  setButtonBusy(button, true, "Sending...");
+
+  try {
+    const { error } = await db.from("post_comments").insert({
+      post_id: postId,
+      user_id: currentUser.id,
+      content
+    });
+
+    if (error) throw error;
+
+    await loadPosts();
+  } catch (error) {
+    alert("Could not add comment: " + (error.message || "Unknown error"));
+  } finally {
+    setButtonBusy(button, false);
+  }
+}
+
+async function saveProfile(event) {
+  event.preventDefault();
+  if (!currentUser) return;
+
+  const name = $("editName")?.value.trim();
+  const bio = $("editBio")?.value.trim() || "";
+
+  if (!name) {
+    setFeedback("profileFeedback", "Your display name cannot be empty.", true);
+    return;
+  }
+
+  const button = $("profileForm")?.querySelector('button[type="submit"]');
+  setButtonBusy(button, true, "Saving...");
+
+  try {
+    const { data, error } = await db
+      .from("profiles")
+      .upsert({
+        id: currentUser.id,
+        display_name: name,
+        bio
+      })
+      .select("id, display_name, bio")
+      .single();
+
+    if (error) throw error;
+
+    currentProfile = data;
+    showLoggedIn();
+    setFeedback("profileFeedback", "Profile saved.");
+  } catch (error) {
+    setFeedback("profileFeedback", error.message || "Could not save your profile.", true);
+  } finally {
+    setButtonBusy(button, false);
+  }
+}
+
+async function logout() {
+  const { error } = await db.auth.signOut();
+
+  if (error) {
+    alert("Could not log out: " + error.message);
+  }
+}
+
+async function startApp(user) {
+  currentUser = user;
+
+  if (!user) {
+    currentProfile = null;
+    showLoggedOut();
+    return;
+  }
+
+  await ensureProfile(user);
+  showLoggedIn();
+  await loadPosts();
+}
+
+// Authentication tabs and form
+$("loginTab")?.addEventListener("click", () => setAuthMode("login"));
+$("signupTab")?.addEventListener("click", () => setAuthMode("signup"));
+$("authForm")?.addEventListener("submit", handleAuth);
+
+// Post composer
+$("postForm")?.addEventListener("submit", publishPost);
+
+// Profile form
+$("profileForm")?.addEventListener("submit", saveProfile);
+
+// Navigation buttons
+document.querySelectorAll("[data-section]").forEach((button) => {
+  button.addEventListener("click", () => {
+    showSection(button.dataset.section);
+  });
+});
+
+// Logout
+$("logoutButton")?.addEventListener("click", logout);
+
+// Like and comment actions
+$("postsList")?.addEventListener("click", (event) => {
+  const button = event.target.closest(".like-button");
+  if (button) {
+    toggleLike(button.dataset.postId, button);
+  }
+});
+
+$("postsList")?.addEventListener("submit", (event) => {
+  if (event.target.matches(".comment-form")) {
+    addComment(event);
+  }
+});
+
+// Search posts already loaded on the page
+$("searchInput")?.addEventListener("input", () => {
+  const query = $("searchInput").value.trim().toLowerCase();
+
+  document.querySelectorAll("#postsList .post-card").forEach((post) => {
+    post.classList.toggle("hidden", !post.textContent.toLowerCase().includes(query));
+  });
+});
+
+// Media buttons are placeholders until storage/upload is configured.
+$("photoButton")?.addEventListener("click", () => {
+  alert("Photo uploads are not connected yet. Supabase Storage must be configured first.");
+});
+
+$("videoButton")?.addEventListener("click", () => {
+  alert("Video uploads are not connected yet. Supabase Storage must be configured first.");
+});
+
+// Listen for login/logout and restore an existing session.
+db.auth.onAuthStateChange((_event, session) => {
+  if (session?.user) {
+    currentUser = session.user;
+    setTimeout(() => startApp(session.user), 0);
+  } else {
+    currentUser = null;
+    currentProfile = null;
+    showLoggedOut();
+  }
+});
+
+setAuthMode("login");
+
+const { data: sessionData, error: sessionError } = await db.auth.getSession();
+
+if (sessionError) {
+  setFeedback("authFeedback", sessionError.message, true);
+} else {
+  await startApp(sessionData.session?.user || null);
+}
+</script>
+ -->
+</body>
+</html>
