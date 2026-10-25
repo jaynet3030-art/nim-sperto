@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIM SPERTO — Join your social world</title>
+<style>
+:root{--purple:#7657f6;--pink:#ff5ca8;--ink:#251d38;--muted:#7b718d;--line:#e8e1f2;--bg:#f8f6ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 10%,#f4ddff 0,transparent 30%),radial-gradient(circle at 90% 80%,#ffe0ed 0,transparent 30%),var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;padding:22px}
+.wrap{width:min(100%,980px);display:grid;grid-template-columns:1fr 1fr;background:#fff;border:1px solid #ffffff;border-radius:28px;overflow:hidden;box-shadow:0 24px 90px #44307018}
+.hero{padding:clamp(28px,5vw,58px);background:linear-gradient(145deg,#7151ef,#9b4fe3 52%,#ff5ca8);color:white;display:flex;flex-direction:column;justify-content:space-between;min-height:600px;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;border:1px solid #ffffff45;border-radius:50%;width:300px;height:300px;right:-100px;top:120px}.hero:after{width:200px;height:200px;right:30px;top:300px;background:#ffffff12}
+.brand{font-size:22px;font-weight:900;letter-spacing:-.6px;position:relative;z-index:1}.brand b{display:inline-grid;place-items:center;background:linear-gradient(135deg,#ffbd58,#ff5ca8);width:36px;height:36px;border-radius:12px;margin-right:8px}
+.hero-copy{position:relative;z-index:1}.hero h1{font-size:clamp(36px,5vw,54px);line-height:1.02;letter-spacing:-2px;margin:0 0 18px}.hero p{line-height:1.7;color:#ffffffdf;max-width:340px}.chips{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}.chips span{border:1px solid #ffffff55;background:#ffffff17;padding:8px 12px;border-radius:999px;font-size:12px}
+.formside{padding:clamp(25px,5vw,54px);display:flex;flex-direction:column;justify-content:center}.formside h2{font-size:27px;letter-spacing:-.8px;margin:0 0 8px}.sub{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 25px}.tabs{display:flex;gap:5px;padding:5px;background:#f4f0fb;border-radius:13px;margin-bottom:22px}.tabs button{flex:1;border:0;background:transparent;padding:11px;border-radius:10px;font-weight:750;color:var(--muted);cursor:pointer}.tabs button.active{background:#fff;color:var(--purple);box-shadow:0 2px 8px #28134a10}
+label{display:block;font-size:13px;font-weight:750;margin:14px 0 7px}input{display:block;width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);outline:none}input:focus{border-color:var(--purple);box-shadow:0 0 0 3px #7657f619}.btn{width:100%;border:0;border-radius:12px;padding:13px 16px;font-weight:800;cursor:pointer}.primary{background:linear-gradient(90deg,var(--purple),var(--pink));color:white;margin-top:20px}.google{background:white;color:var(--ink);border:1px solid var(--line);margin-top:12px}.divider{display:flex;align-items:center;gap:12px;color:#a198b0;font-size:12px;margin:18px 0}.divider:before,.divider:after{content:"";height:1px;background:var(--line);flex:1}.note{font-size:11px;color:#9389a4;line-height:1.6;margin-top:20px}.feedback{font-size:13px;line-height:1.5;margin-top:14px;color:#6042ca;overflow-wrap:anywhere}.hidden{display:none!important}.profile{margin-top:16px;padding:18px;background:#faf8ff;border:1px solid var(--line);border-radius:16px}.profile h3{margin:0 0 8px}.profile p{font-size:13px;color:var(--muted);line-height:1.5}.secondary{background:#f3effb;color:#6245d8}
+@media(max-width:720px){body{padding:12px}.wrap{grid-template-columns:1fr}.hero{min-height:290px;padding:25px}.hero h1{font-size:38px}.hero-copy{margin:34px 0 20px}.formside{padding:25px}.chips{display:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero">
+  <div class="brand"><b>N</b> NIM SPERTO</div>
+  <div class="hero-copy"><h1>Your world.<br>Your people.</h1><p>Find your community, share your moments, and stay close to the people and ideas that make life interesting.</p></div>
+  <div class="chips"><span>✦ Find your vibe</span><span>♡ Share moments</span><span>↗ Meet your people</span></div>
+</section>
+<section class="formside">
+  <div id="authPanel">
+    <h2 id="heading">Welcome to NIM SPERTO</h2>
+    <p class="sub" id="subheading">Sign in to continue to your social world.</p>
+    <div class="tabs"><button id="signinTab" class="active" type="button">Sign in</button><button id="signupTab" type="button">Create account</button></div>
+    <form id="authForm">
+      <div id="nameField" class="hidden"><label for="displayName">Display name</label><input id="displayName" autocomplete="name" maxlength="80" placeholder="How should we call you?"></div>
+      <label for="email">Email address</label><input id="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      <label for="password">Password</label><input id="password" type="password" minlength="8" autocomplete="current-password" required placeholder="At least 8 characters">
+      <button class="btn primary" id="submitBtn" type="submit">Sign in with email</button>
+    </form>
+    <div class="divider">or continue with</div>
+    <button class="btn google" id="googleBtn" type="button">◉ Continue with Google</button>
+    <p class="note">By continuing, you agree to use NIM SPERTO respectfully. Add your final Terms and Privacy Policy before opening registration to the public.</p>
+    <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+  </div>
+  <div id="profilePanel" class="hidden">
+    <h2>You're signed in 🎉</h2><p class="sub">Welcome to your NIM SPERTO account.</p>
+    <div class="profile"><h3 id="profileName">Your profile</h3><p id="profileEmail"></p><p id="profileCreated"></p><label for="editName">Display name</label><input id="editName" maxlength="80" placeholder="Your display name"><button class="btn primary" id="saveProfile" type="button">Save profile</button></div>
+    <button class="btn secondary" id="signoutBtn" type="button" style="margin-top:12px">Sign out</button>
+    <div id="profileFeedback" class="feedback" role="status"></div>
+  </div>
+</section>
+</main>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+// Replace these two placeholders with the public Project URL and publishable/anon key
+// from your Supabase dashboard. Never use a service_role key in browser code.
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_") && !SUPABASE_ANON_KEY.includes("YOUR_");
+const feedback = document.querySelector("#feedback");
+let mode = "signin";
+let supabase;
+
+function setMode(next) {
+  mode = next;
+  document.querySelector("#signinTab").classList.toggle("active", mode === "signin");
+  document.querySelector("#signupTab").classList.toggle("active", mode === "signup");
+  document.querySelector("#nameField").classList.toggle("hidden", mode !== "signup");
+  document.querySelector("#displayName").required = mode === "signup";
+  document.querySelector("#heading").textContent = mode === "signup" ? "Create your account" : "Welcome to NIM SPERTO";
+  document.querySelector("#subheading").textContent = mode === "signup" ? "Join in and find your people." : "Sign in to continue to your social world.";
+  document.querySelector("#submitBtn").textContent = mode === "signup" ? "Create account with email" : "Sign in with email";
+  document.querySelector("#password").autocomplete = mode === "signup" ? "new-password" : "current-password";
+  feedback.textContent = "";
+}
+document.querySelector("#signinTab").addEventListener("click", () => setMode("signin"));
+document.querySelector("#signupTab").addEventListener("click", () => setMode("signup"));
+
+function requireSetup() {
+  if (configured && supabase) return true;
+  feedback.textContent = "Setup needed: add your Supabase Project URL and publishable/anon key in this file, then deploy it over HTTPS. See README.md.";
+  return false;
+}
+
+async function showSession(session) {
+  if (!session) {
+    document.querySelector("#authPanel").classList.remove("hidden");
+    document.querySelector("#profilePanel").classList.add("hidden");
+    return;
+  }
+  document.querySelector("#authPanel").classList.add("hidden");
+  document.querySelector("#profilePanel").classList.remove("hidden");
+  document.querySelector("#profileEmail").textContent = session.user.email || "Signed in with Google";
+  const fallback = session.user.user_metadata?.display_name || session.user.user_metadata?.full_name || (session.user.email || "Member").split("@")[0];
+  let { data, error } = await supabase.from("profiles").select("display_name, username, bio, created_at").eq("id", session.user.id).maybeSingle();
+  if (error) {
+    document.querySelector("#profileFeedback").textContent = "Signed in, but profile data could not load. Check that you ran supabase-schema.sql.";
+  }
+  const name = data?.display_name || fallback;
+  document.querySelector("#profileName").textContent = name;
+  document.querySelector("#editName").value = name;
+  document.querySelector("#profileCreated").textContent = data?.created_at ? "Member since " + new Date(data.created_at).toLocaleDateString() : "Your profile is ready to set up.";
+}
+
+if (configured) {
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+  });
+  supabase.auth.onAuthStateChange((_event, session) => {
+    // Defer database calls to avoid doing additional Supabase work inside the auth callback.
+    setTimeout(() => showSession(session), 0);
+  });
+  const { data: { session } } = await supabase.auth.getSession();
+  await showSession(session);
+} else {
+  feedback.textContent = "Starter mode: connect a Supabase project to enable real sign-in, Google OAuth, and saved profiles.";
+}
+
+document.querySelector("#authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!requireSetup()) return;
+  feedback.textContent = "Working…";
+  const email = document.querySelector("#email").value.trim();
+  const password = document.querySelector("#password").value;
+  if (mode === "signup") {
+    const display_name = document.querySelector("#displayName").value.trim();
+    const { data, error } = await supabase.auth.signUp({
+      email, password, options: { data: { display_name }, emailRedirectTo: location.origin + location.pathname }
+    });
+    if (error) feedback.textContent = error.message;
+    else if (data.session) feedback.textContent = "Account created. Loading your profile…";
+    else feedback.textContent = "Account created. Check your email for a confirmation link if email confirmation is enabled.";
+  } else {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    feedback.textContent = error ? error.message : "Signed in. Loading your profile…";
+  }
+});
+
+document.querySelector("#googleBtn").addEventListener("click", async () => {
+  if (!requireSetup()) return;
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: location.origin + location.pathname }
+  });
+  if (error) feedback.textContent = error.message;
+});
+
+document.querySelector("#saveProfile").addEventListener("click", async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  const display_name = document.querySelector("#editName").value.trim();
+  if (!display_name || display_name.length > 80) {
+    document.querySelector("#profileFeedback").textContent = "Please enter a display name of 1–80 characters.";
+    return;
+  }
+  const { error } = await supabase.from("profiles").upsert({ id: user.id, display_name }, { onConflict: "id" });
+  document.querySelector("#profileFeedback").textContent = error ? error.message : "Profile saved.";
+  if (!error) document.querySelector("#profileName").textContent = display_name;
+});
+document.querySelector("#signoutBtn").addEventListener("click", async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) document.querySelector("#profileFeedback").textContent = error.message;
+});
+</script>
+</body>
+</html>
