@@ -281,6 +281,8 @@ async function showSession(session) {
   }
   document.querySelector("#authPanel").classList.add("hidden");
   document.querySelector("#profilePanel").classList.remove("hidden");
+  document.querySelector("#socialFeed").style.display = "none";
+return;
   document.querySelector("#profileEmail").textContent = session.user.email || "Signed in with Google";
   const fallback = session.user.user_metadata?.display_name || session.user.user_metadata?.full_name || (session.user.email || "Member").split("@")[0];
   let { data, error } = await supabase.from("profiles").select("display_name, username, bio, created_at").eq("id", session.user.id).maybeSingle();
