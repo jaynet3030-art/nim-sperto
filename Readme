@@ -1,0 +1,12 @@
+Privacy
+
+NIM SPERTO is a social networking project designed with user privacy and security in mind.
+
+- Account security: Authentication is handled through Supabase.
+- Profile protection: Database access is controlled by security policies.
+- Personal information: Never publish passwords, authentication tokens, or private account details.
+- Public content: Posts and profile information may be visible to other users depending on the website's settings.
+- Third-party services: Supabase and Google sign-in may process information according to their respective privacy policies.
+- Development status: NIM SPERTO is under development. Privacy and security features must be tested before public launch.
+
+Contact: Add your project's official contact address here when available.
