@@ -155,6 +155,89 @@
     });
   </script>
   
+<section id="signin" style="max-width:400px;margin:30px auto;padding:24px;background:white;border-radius:12px;font-family:Arial,sans-serif">
+  <h2 style="color:#1877f2">Sign in to NIM SPERTO</h2>
+  <form id="signinForm">
+    <label for="signinEmail">Email</label>
+    <input id="signinEmail" type="email" required autocomplete="email"
+      style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box">
+
+    <label for="signinPassword">Password</label>
+    <input id="signinPassword" type="password" required autocomplete="current-password"
+      style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box">
+
+    <button type="submit"
+      style="background:#1877f2;color:white;border:0;padding:12px;width:100%;border-radius:6px">
+      Sign In
+    </button>
+    <p id="signinMessage" role="status"></p>
+  </form>
+</section>
+
+<script>
+  document.getElementById("signinForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const message = document.getElementById("signinMessage");
+    message.textContent = "Signing in...";
+
+    try {
+      const { data, error } = await client.auth.signInWithPassword({
+        email: document.getElementById("signinEmail").value.trim(),
+        password: document.getElementById("signinPassword").value
+      });
+
+      if (error) throw error;
+
+      message.textContent = "Sign-in successful! Welcome to NIM SPERTO.";
+    } catch (error) {
+      message.textContent = error.message || "Sign-in failed. Please try again.";
+    }
+  });
+</script>
+
+<section id="signin" style="max-width:400px;margin:30px auto;padding:24px;background:white;border-radius:12px;font-family:Arial,sans-serif">
+  <h2 style="color:#1877f2">Sign in to NIM SPERTO</h2>
+  <form id="signinForm">
+    <label for="signinEmail">Email</label>
+    <input id="signinEmail" type="email" required autocomplete="email"
+      style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box">
+
+    <label for="signinPassword">Password</label>
+    <input id="signinPassword" type="password" required autocomplete="current-password"
+      style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box">
+
+    <button type="submit"
+      style="background:#1877f2;color:white;border:0;padding:12px;width:100%;border-radius:6px">
+      Sign In
+    </button>
+    <p id="signinMessage" role="status"></p>
+  </form>
+</section>
+
+<script>
+  document.getElementById("signinForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const message = document.getElementById("signinMessage");
+    message.textContent = "Signing in...";
+
+    try {
+      const { data, error } = await client.auth.signInWithPassword({
+        email: document.getElementById("signinEmail").value.trim(),
+        password: document.getElementById("signinPassword").value
+      });
+
+      if (error) throw error;
+
+      message.textContent = "Sign-in successful! Welcome to NIM SPERTO.";
+    } catch (error) {
+      message.textContent = error.message || "Sign-in failed. Please try again.";
+    }
+  });
+</script>
+
+  
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const SUPABASE_URL = "https://micktgtheoapwlkybvjf.supabase.co";
