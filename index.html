@@ -154,5 +154,19 @@
       status.textContent = "Post added to this page!";
     });
   </script>
+  
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://micktgtheoapwlkybvjf.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_a7202fOro3V11fUabIpDTg_dBD2qd0k";
+
+  const client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  console.log("NIM SPERTO: Supabase client initialized.");
+</script>
+
 </body>
 </html>
