@@ -59,6 +59,198 @@ const configured = SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes
 const feedback = document.querySelector("#feedback");
 let mode = "signin";
 let supabase;
+  
+/* NIM SPERTO: publish and load posts */
+async function loadSocialPosts() {
+  const feed = document.querySelector("#socialPosts");
+  if (!feed || !supabase) return;
+
+  feed.replaceChildren();
+
+  const { data: posts, error } = await supabase
+    .from("posts")
+    .select("id, user_id, content, created_at")
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (error) {
+    feed.textContent = "Could not load posts: " + error.message;
+    return;
+  }
+
+  if (!posts || posts.length === 0) {
+    feed.textContent = "No posts yet. Be the first to share!";
+    return;
+  }
+
+  for (const post of posts) {
+    const card = document.createElement("article");
+    card.style.cssText =
+      "padding:16px;margin-top:16px;border:1px solid #e8e1f2;border-radius:14px";
+
+    const content = document.createElement("p");
+    content.textContent = post.content;
+
+    const date = document.createElement("small");
+    date.textContent = new Date(post.created_at).toLocaleString();
+
+    const actions = document.createElement("div");
+
+    const likeButton = document.createElement("button");
+    likeButton.type = "button";
+    likeButton.textContent = "❤️ Like";
+    likeButton.addEventListener("click", () => toggleSocialLike(post.id));
+
+    const commentButton = document.createElement("button");
+    commentButton.type = "button";
+    commentButton.textContent = "💬 Comments";
+    commentButton.style.marginLeft = "8px";
+    commentButton.addEventListener("click", () => showSocialComments(post.id, card));
+
+    actions.append(likeButton, commentButton);
+    card.append(content, date, actions);
+    feed.append(card);
+  }
+}
+
+async function toggleSocialLike(postId) {
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
+    alert("Please sign in first.");
+    return;
+  }
+
+  const { data: existing, error } = await supabase
+    .from("post_likes")
+    .select("post_id")
+    .eq("post_id", postId)
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    alert("Could not check like: " + error.message);
+    return;
+  }
+
+  const result = existing
+    ? await supabase.from("post_likes").delete()
+        .eq("post_id", postId).eq("user_id", user.id)
+    : await supabase.from("post_likes").insert({
+        post_id: postId,
+        user_id: user.id
+      });
+
+  if (result.error) alert("Like failed: " + result.error.message);
+  else await loadSocialPosts();
+}
+
+async function showSocialComments(postId, card) {
+  let panel = card.querySelector(".social-comments");
+  if (panel) {
+    panel.remove();
+    return;
+  }
+
+  panel = document.createElement("div");
+  panel.className = "social-comments";
+  panel.style.marginTop = "12px";
+  panel.textContent = "Loading comments...";
+  card.append(panel);
+
+  const { data: comments, error } = await supabase
+    .from("post_comments")
+    .select("id, content, created_at")
+    .eq("post_id", postId)
+    .order("created_at", { ascending: true });
+
+  panel.replaceChildren();
+
+  if (error) {
+    panel.textContent = "Could not load comments: " + error.message;
+    return;
+  }
+
+  for (const comment of comments || []) {
+    const line = document.createElement("p");
+    line.textContent = comment.content;
+    panel.append(line);
+  }
+
+  const form = document.createElement("form");
+  const input = document.createElement("input");
+  input.required = true;
+  input.maxLength = 2000;
+  input.placeholder = "Write a comment...";
+  input.style.width = "100%";
+
+  const button = document.createElement("button");
+  button.type = "submit";
+  button.textContent = "Add comment";
+  button.style.marginTop = "8px";
+
+  form.append(input, button);
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const { data: { user } } = await supabase.auth.getUser();
+    const content = input.value.trim();
+    if (!user || !content) return;
+
+    const { error } = await supabase.from("post_comments").insert({
+      post_id: postId,
+      user_id: user.id,
+      content
+    });
+
+    if (error) {
+      alert("Comment failed: " + error.message);
+      return;
+    }
+
+    await showSocialComments(postId, card);
+    await showSocialComments(postId, card);
+  });
+
+  panel.append(form);
+}
+
+document.querySelector("#socialPostForm")
+  ?.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const { data: { user }, error: authError } =
+      await supabase.auth.getUser();
+
+    const message = document.querySelector("#socialPostMessage");
+    const input = document.querySelector("#socialPostContent");
+    const content = input.value.trim();
+
+    if (authError || !user) {
+      message.textContent = "Please sign in first.";
+      return;
+    }
+    if (!content) {
+      message.textContent = "Write something first.";
+      return;
+    }
+
+    message.textContent = "Publishing...";
+
+    const { error } = await supabase.from("posts").insert({
+      user_id: user.id,
+      content
+    });
+
+    if (error) {
+      message.textContent = "Could not publish: " + error.message;
+      return;
+    }
+
+    input.value = "";
+    message.textContent = "Post published!";
+    await loadSocialPosts();
+  });
+
 
 function setMode(next) {
   mode = next;
