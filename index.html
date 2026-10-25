@@ -161,5 +161,25 @@ document.querySelector("#signoutBtn").addEventListener("click", async () => {
   if (error) document.querySelector("#profileFeedback").textContent = error.message;
 });
 </script>
+  
+<!-- NIM SPERTO social feed -->
+<div id="socialFeed" style="display:none;max-width:700px;margin:30px auto;padding:20px;background:#fff;border-radius:18px;box-shadow:0 8px 30px #44307018">
+  <h2 style="color:#7657f6">NIM SPERTO Feed</h2>
+  <p>Share something with your community.</p>
+
+  <form id="socialPostForm">
+    <textarea id="socialPostContent" maxlength="5000" required
+      placeholder="What's on your mind?"
+      style="width:100%;min-height:100px;padding:12px;border:1px solid #e8e1f2;border-radius:12px;font:inherit"></textarea>
+    <button type="submit"
+      style="margin-top:10px;padding:12px 20px;border:0;border-radius:10px;background:#7657f6;color:white;font-weight:bold">
+      Publish post
+    </button>
+  </form>
+
+  <p id="socialPostMessage" role="status"></p>
+  <div id="socialPosts"></div>
+</div>
+
 </body>
 </html>
