@@ -277,6 +277,7 @@ async function showSession(session) {
   if (!session) {
     document.querySelector("#authPanel").classList.remove("hidden");
     document.querySelector("#profilePanel").classList.add("hidden");
+ coldocument.querySelector("#SocialFeed").style.display = "none";
     return;
   }
   document.querySelector("#authPanel").classList.add("hidden");
